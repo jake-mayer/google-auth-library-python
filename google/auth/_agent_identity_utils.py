@@ -227,6 +227,7 @@ def calculate_certificate_fingerprint(cert):
 
         der_cert = cert.public_bytes(serialization.Encoding.DER)
         _LOGGER.warning("Cert:", cert)
+        print("Cert:", cert)
         _LOGGER.warning("DER Cert:", der_cert)
         fingerprint = hashlib.sha256(der_cert).digest()
         _LOGGER.warning("fingerprint:", fingerprint)
@@ -240,6 +241,7 @@ def calculate_certificate_fingerprint(cert):
         unpadded_base64_fingerprint = base64_fingerprint.rstrip("=")
         _LOGGER.warning("unpadded_base64_fingerprint", unpadded_base64_fingerprint)
         _LOGGER.warning("quoted_unpadded_base64_fingerprint", quote(unpadded_base64_fingerprint))
+        print("quoted_unpadded_base64_fingerprint", quote(unpadded_base64_fingerprint))
         return quote(unpadded_base64_fingerprint)
     except ImportError as e:
         raise ImportError(CRYPTOGRAPHY_NOT_FOUND_ERROR) from e
