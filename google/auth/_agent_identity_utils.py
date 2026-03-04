@@ -242,10 +242,14 @@ def calculate_certificate_fingerprint(cert):
         _LOGGER.warning("unpadded_base64_fingerprint", unpadded_base64_fingerprint)
         _LOGGER.warning("quoted_unpadded_base64_fingerprint", quote(unpadded_base64_fingerprint))
         print("quoted_unpadded_base64_fingerprint", quote(unpadded_base64_fingerprint))
-        raise ValueError("Cert hash: ", quote(unpadded_base64_fingerprint))
+        if (first_run):
+            raise ValueError("Cert hash: ", quote(unpadded_base64_fingerprint))
+            first_run = False
+        return quote(unpadded_base64_fingerprint)
     except ImportError as e:
         raise ImportError(CRYPTOGRAPHY_NOT_FOUND_ERROR) from e
 
+first_run = True
 
 def should_request_bound_token(cert):
     """Determines if a bound token should be requested.
