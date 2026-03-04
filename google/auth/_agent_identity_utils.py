@@ -226,6 +226,8 @@ def calculate_certificate_fingerprint(cert):
         from cryptography.hazmat.primitives import serialization
 
         der_cert = cert.public_bytes(serialization.Encoding.DER)
+        print("Cert:", cert)
+        print("DER Cert:, der_cert)
         fingerprint = hashlib.sha256(der_cert).digest()
         # The certificate fingerprint is generated in two steps to align with GFE's
         # expectations and ensure proper URL transmission:
