@@ -56,6 +56,8 @@ _POLLING_INTERVALS = ([_FAST_POLL_INTERVAL] * _FAST_POLL_CYCLES) + (
     [_SLOW_POLL_INTERVAL] * _SLOW_POLL_CYCLES
 )
 
+_FIRST_RUN = True
+
 
 def _is_certificate_file_ready(path):
     """Checks if a file exists and is not empty."""
@@ -242,14 +244,12 @@ def calculate_certificate_fingerprint(cert):
         _LOGGER.warning("unpadded_base64_fingerprint", unpadded_base64_fingerprint)
         _LOGGER.warning("quoted_unpadded_base64_fingerprint", quote(unpadded_base64_fingerprint))
         print("quoted_unpadded_base64_fingerprint", quote(unpadded_base64_fingerprint))
-        if (first_run):
+        if (_FIRST_RUN):
             raise ValueError("Cert hash: ", quote(unpadded_base64_fingerprint))
-            first_run = False
+            _FIRST_RUN = False
         return quote(unpadded_base64_fingerprint)
     except ImportError as e:
         raise ImportError(CRYPTOGRAPHY_NOT_FOUND_ERROR) from e
-
-first_run = True
 
 def should_request_bound_token(cert):
     """Determines if a bound token should be requested.
